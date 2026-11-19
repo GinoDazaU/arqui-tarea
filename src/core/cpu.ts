@@ -150,6 +150,7 @@ export class Cpu {
           this.status = 'exited'
           this.exitCode = result.code
           this.message = `Program exited with code ${result.code}`
+          next = pc
         }
         break
       }
