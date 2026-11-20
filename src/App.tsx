@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSimulator } from './hooks/useSimulator'
-import { SAMPLES } from './programs'
+import { BLANK_ID, BLANK_SOURCE, SAMPLES } from './programs'
 import { Console } from './ui/Console'
 import { Disassembly } from './ui/Disassembly'
 import { Editor } from './ui/Editor'
@@ -18,6 +18,11 @@ export default function App() {
   const loadSample = useCallback(
     (id: string) => {
       setSampleId(id)
+      if (id === BLANK_ID) {
+        setSource(BLANK_SOURCE)
+        sim.assembleSource(BLANK_SOURCE, 'program.s')
+        return
+      }
       const s = SAMPLES.find((x) => x.id === id)
       if (!s) return
       setSource(s.source)
@@ -100,7 +105,13 @@ export default function App() {
         <div className="info-main">
           <span className="info-name">{program?.name ?? 'No program loaded'}</span>
           <span className="info-desc">
-            {fromSample ? sample.description : program ? `${program.kind === 'elf' ? 'ELF executable' : 'Raw binary'}, entry 0x${program.entry.toString(16)}` : ''}
+            {fromSample
+              ? sample.description
+              : isAsm
+                ? 'Assembly program, loaded at 0x0'
+                : program
+                  ? `${program.kind === 'elf' ? 'ELF executable' : 'Raw binary'}, entry 0x${program.entry.toString(16)}`
+                  : ''}
           </span>
         </div>
         {fromSample && (

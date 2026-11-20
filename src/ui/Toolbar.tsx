@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { SPEEDS, type Simulator } from '../hooks/useSimulator'
-import { SAMPLES } from '../programs'
+import { BLANK_ID, SAMPLES } from '../programs'
 
 interface Props {
   sim: Simulator
@@ -58,6 +58,7 @@ export function Toolbar({ sim, sampleId, onSample, onDownload }: Props) {
           <option value="" disabled>
             Sample programs…
           </option>
+          <option value={BLANK_ID}>New program (blank)</option>
           {SAMPLES.map((s) => (
             <option key={s.id} value={s.id}>
               {s.name}

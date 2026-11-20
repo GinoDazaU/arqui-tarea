@@ -1,9 +1,13 @@
 import type { Cpu } from '../core/cpu'
+import blank from './blank.s?raw'
 import factorial from './factorial.s?raw'
 import fibonacci from './fibonacci.s?raw'
 import quicksort from './quicksort.s?raw'
 import riscvtest from './riscvtest.s?raw'
 import symmetricTree from './symmetric-tree.s?raw'
+
+export const BLANK_ID = 'blank'
+export const BLANK_SOURCE = blank
 
 export interface Sample {
   id: string
