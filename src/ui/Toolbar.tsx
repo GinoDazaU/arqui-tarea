@@ -21,7 +21,7 @@ const speedLabel = (s: number) => (s === Infinity ? 'Max' : `${s} ips`)
 
 export function Toolbar({ sim, sampleId, onSample, onDownload }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme ?? 'dark')
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme ?? 'light')
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
