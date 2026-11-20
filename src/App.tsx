@@ -100,7 +100,7 @@ export default function App() {
         <div className="info-main">
           <span className="info-name">{program?.name ?? 'No program loaded'}</span>
           <span className="info-desc">
-            {fromSample ? sample.description : program ? `${program.kind.toUpperCase()} · entry 0x${program.entry.toString(16)}` : ''}
+            {fromSample ? sample.description : program ? `${program.kind === 'elf' ? 'ELF executable' : 'Raw binary'}, entry 0x${program.entry.toString(16)}` : ''}
           </span>
         </div>
         {fromSample && (

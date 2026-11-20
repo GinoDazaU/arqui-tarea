@@ -69,7 +69,7 @@ export function useSimulator() {
 
   const reportStop = useCallback(() => {
     if (cpu.status === 'error') append('error', cpu.message)
-    else if (cpu.status === 'halted' || cpu.status === 'exited') append('info', `${cpu.message} · ${cpu.steps} instructions`)
+    else if (cpu.status === 'halted' || cpu.status === 'exited') append('info', `${cpu.message} after ${cpu.steps} instructions`)
     else if (cpu.status === 'waiting-input') append('info', 'Waiting for input…')
   }, [append, cpu])
 

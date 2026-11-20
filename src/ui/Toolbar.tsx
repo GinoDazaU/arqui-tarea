@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { SPEEDS, type Simulator } from '../hooks/useSimulator'
 import { SAMPLES } from '../programs'
 
@@ -21,6 +21,18 @@ const speedLabel = (s: number) => (s === Infinity ? 'Max' : `${s} ips`)
 
 export function Toolbar({ sim, sampleId, onSample, onDownload }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme ?? 'dark')
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = next
+    try {
+      localStorage.setItem('theme', next)
+    } catch {
+      /* storage unavailable */
+    }
+    setTheme(next)
+  }
   const { cpu, program, running } = sim
   const status = running ? 'running' : program ? cpu.status : 'empty'
   const canRun = !!program && cpu.running
@@ -37,7 +49,7 @@ export function Toolbar({ sim, sampleId, onSample, onDownload }: Props) {
         <div className="logo">RV</div>
         <div>
           <div className="brand-name">RV32I Simulator</div>
-          <div className="brand-sub">fetch · decode · execute</div>
+          <div className="brand-sub">Base integer ISA, 32-bit</div>
         </div>
       </div>
 
@@ -93,6 +105,14 @@ export function Toolbar({ sim, sampleId, onSample, onDownload }: Props) {
           <i />
           {status === 'running' ? 'Running' : status === 'empty' ? 'No program' : STATUS_LABEL[cpu.status]}
         </span>
+        <button
+          className="btn btn-ghost theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark' ? '☀' : '☾'}
+        </button>
       </div>
     </header>
   )
